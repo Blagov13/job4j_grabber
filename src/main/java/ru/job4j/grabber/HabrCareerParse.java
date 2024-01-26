@@ -23,7 +23,7 @@ public class HabrCareerParse {
                 Element titleElement = row.select(".vacancy-card__title").first();
                 assert titleElement != null;
                 Element linkElement = titleElement.child(0);
-                Element timeElement = row.select(".basic-date").first();
+                Element timeElement = row.select(".vacancy-card__date").first();
                 String vacancyName = titleElement.text();
                 assert timeElement != null;
                 String timeElements = timeElement.text();
@@ -33,4 +33,3 @@ public class HabrCareerParse {
         }
     }
 }
-

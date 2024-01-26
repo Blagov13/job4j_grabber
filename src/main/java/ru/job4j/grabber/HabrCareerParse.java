@@ -13,6 +13,18 @@ public class HabrCareerParse {
     public static final String PREFIX = "/vacancies?page=";
     public static final String SUFFIX = "&q=Java%20developer&type=all";
 
+    private static String retrieveDescription(String link) throws IOException {
+        final String[] descriptions = new String[1];
+        Connection connection = Jsoup.connect(link);
+        Document document = connection.get();
+        Elements rows = document.select(".faded-content__body");
+        rows.forEach(row -> {
+            Element titleElement = row.select(".vacancy-description__text").first();
+            descriptions[0] = titleElement.text();
+        });
+        return descriptions[0];
+    }
+
     public static void main(String[] args) throws IOException {
         for (int i = 1; i <= 5; i++) {
             String fullLink = "%s%s%d%s".formatted(SOURCE_LINK, PREFIX, i, SUFFIX);
@@ -28,7 +40,11 @@ public class HabrCareerParse {
                 assert timeElement != null;
                 String timeElements = timeElement.text();
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-                System.out.printf("%s %s %s%n", vacancyName, link, timeElements);
+                try {
+                    System.out.printf("%s %s %s %s%n", vacancyName, link, retrieveDescription(link), timeElements);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
         }
     }

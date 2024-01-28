@@ -13,7 +13,7 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-public class Grabber implements Grab{
+public class Grabber implements Grab {
     private final Parse parse;
     private final Store store;
     private final Scheduler scheduler;
@@ -52,7 +52,7 @@ public class Grabber implements Grab{
             Parse parse = (Parse) map.get("parse");
             List<Post> list;
             try {
-                list = parse.list("https://career.habr.com");
+                list = parse.list("https://career.habr.com/vacancies?page=2&q=Java+developer&type=all");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -66,7 +66,7 @@ public class Grabber implements Grab{
     public static void main(String[] args) throws Exception {
         var config = new Properties();
         try (InputStream input = Grabber.class.getClassLoader()
-                .getResourceAsStream("app.properties")) {
+                .getResourceAsStream("grabber.properties")) {
             config.load(input);
         }
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();

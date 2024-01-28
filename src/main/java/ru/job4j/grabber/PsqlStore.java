@@ -1,9 +1,6 @@
 package ru.job4j.grabber;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -88,18 +85,5 @@ public class PsqlStore implements Store, AutoCloseable {
         if (connection != null) {
             connection.close();
         }
-    }
-
-    public static void main(String[] args) throws SQLException {
-        Properties config = new Properties();
-        try (InputStream reader = PsqlStore.class.getClassLoader().getResourceAsStream("rabbit.properties")) {
-            config.load(reader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        PsqlStore store = new PsqlStore(config);
-        Post temp = new Post("tittle", "link", "test", LocalDateTime.now());
-        store.save(temp);
-        System.out.println(store.getAll());
     }
 }

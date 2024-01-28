@@ -98,7 +98,7 @@ public class PsqlStore implements Store, AutoCloseable {
             e.printStackTrace();
         }
         PsqlStore store = new PsqlStore(config);
-        Post temp = new Post("tittle","link", "test", LocalDateTime.now());
+        Post temp = new Post("tittle", "link", "test", LocalDateTime.now());
         store.save(temp);
         System.out.println(store.getAll());
     }

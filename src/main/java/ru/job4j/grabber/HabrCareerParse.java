@@ -40,7 +40,7 @@ public class HabrCareerParse implements Parse {
         Element titleElement = row.select(".vacancy-card__title").first();
         assert titleElement != null;
         Element linkElement = titleElement.child(0);
-        Element timeElement = row.select(".vacancy-card__date").first();
+        Element timeElement = row.select("datetime").first();
         String vacancyName = titleElement.text();
         assert timeElement != null;
         LocalDateTime dateVacancy = dateTimeParser.parse(timeElement.attr("datetime"));

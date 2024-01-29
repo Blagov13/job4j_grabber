@@ -49,7 +49,7 @@ public class HabrCareerParse implements Parse {
     }
 
     @Override
-    public List<Post> list(String link) throws IOException {
+    public List<Post> list(String link) {
         List<Post> vacancy = new ArrayList<>();
         try {
             for (int i = 1; i <= 5; i++) {

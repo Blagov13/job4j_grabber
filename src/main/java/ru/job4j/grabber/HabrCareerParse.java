@@ -38,12 +38,13 @@ public class HabrCareerParse implements Parse {
     private Post postParsing(Element row) throws IOException {
         int id = 0;
         Element titleElement = row.select(".vacancy-card__title").first();
-        assert titleElement != null;
         Element linkElement = titleElement.child(0);
-        Element timeElement = row.select("datetime").first();
+        LocalDateTime dateVacancy = dateTimeParser.parse(row
+                .select(".vacancy-card__date")
+                .first()
+                .child(0)
+                .attr("datetime"));
         String vacancyName = titleElement.text();
-        assert timeElement != null;
-        LocalDateTime dateVacancy = dateTimeParser.parse(timeElement.attr("datetime"));
         String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
         return new Post(id, vacancyName, link, retrieveDescription(link), dateVacancy);
     }
